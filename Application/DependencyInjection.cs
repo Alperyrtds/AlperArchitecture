@@ -1,16 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Abstractions;
+using Domain.Models;
+using Domain.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using Microsoft.Extensions.Configuration;
 
 namespace Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration inConfig)
     {
         var assembly = typeof(DependencyInjection).Assembly;
 
@@ -18,6 +17,8 @@ public static class DependencyInjection
             configuration.RegisterServicesFromAssembly(assembly));
 
         services.AddValidatorsFromAssembly(assembly);
+
+        services.AddScoped<IProjectRepository<TblEmployee>, ProjectRepository<TblEmployee>>();
 
         return services;
     }

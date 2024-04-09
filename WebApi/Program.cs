@@ -1,5 +1,7 @@
 using Application;
+using Domain.Models;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,12 +14,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddApplication()
+    .AddApplication(builder.Configuration)
     .AddInfrastructure();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
+
+builder.Services.AddDbContext<DenizadarAlperProjectContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AlperProject"));
+});
 
 var app = builder.Build();
 
