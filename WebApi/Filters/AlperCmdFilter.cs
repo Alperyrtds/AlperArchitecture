@@ -31,7 +31,7 @@ public class AlperCmdFilter<TCommand, TValidator> : IEndpointFilter
 
                 cmd.IslemYapanKullanici = email.Value;
            
-                cmd.IslemYapanKullanici = string.Empty;
+                //cmd.IslemYapanKullanici = string.Empty;
             
 
             var validationResult = await validator.ValidateAsync(cmd);

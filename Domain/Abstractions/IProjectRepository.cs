@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Domain.Abstractions;
+﻿namespace Domain.Abstractions;
 
 public interface IProjectRepository<T>
 {

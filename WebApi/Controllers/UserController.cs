@@ -28,7 +28,15 @@ namespace WebApi.Controllers
             return ApiResult<LoginDto>.GetHttpResult(result); 
 
         }
+        [HttpPost("/createUser")]
+        [Produces(typeof(AlperResult<LoginDto>))]
+        public async Task<IResult> CreateUser([FromBody] LoginQry qry, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(qry, cancellationToken);
 
+            return ApiResult<LoginDto>.GetHttpResult(result);
+
+        }
 
     }
 }

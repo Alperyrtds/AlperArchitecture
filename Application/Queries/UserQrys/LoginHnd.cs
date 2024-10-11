@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text.Json;
 using System.Text;
 using Domain.Abstractions;
 using Domain.Exceptions;
@@ -30,8 +29,6 @@ public sealed class LoginHnd : IRequestHandler<LoginQry, AlperResult<LoginDto>>
             var key = _configuration["Jwt:Key"];
             var parolaHash = Genarate.PasswordHash(request.Password, key!);
 
-
-            //var user = await _employeeRepository.GetByEmailAsync(request.Email);
             var user = await _employeeRepository.GetByEmailAsync(request.Email);
 
             if (user == null)
@@ -47,20 +44,11 @@ public sealed class LoginHnd : IRequestHandler<LoginQry, AlperResult<LoginDto>>
             var claims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, user.Id),
-                //new(ClaimTypes.Role, dagitimSirketFirmaKullaniciDto.Rol.ToString()),
                 new(ClaimTypes.Email, user.Email),
                 new(ClaimTypes.GivenName, user.Name),
                 new(ClaimTypes.Surname, user.Surname),
                 new(ClaimTypes.MobilePhone, user.PhoneNumber),
-                //new(ClaimTypes.System, firmaId),
-                //new(ClaimTypes.UserData, dagitimSirketFirmaKullaniciDto.KullaniciDurum.ToString()),
-                //new(ClaimTypes.Dns, JsonSerializer.Serialize(firmaTip)),
-                //new(ClaimTypes.Dsa, string.Join(',', firmaTip.Select(ft => ft.FirmaMenuTip).Distinct())),
-                //new(ClaimTypes.GroupSid, firmaAdi),
-                //new(ClaimTypes.Country, dagitimSirketFirmaKullaniciDto.KullaniciDagitimSirketId)
             };
-
-         
 
             var token = new JwtSecurityToken
             (

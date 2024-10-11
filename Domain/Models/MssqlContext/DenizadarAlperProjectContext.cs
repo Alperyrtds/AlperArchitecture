@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Models;
+namespace Domain.Models.MssqlContext;
 
 public partial class DenizadarAlperProjectContext : DbContext
 {
@@ -19,7 +17,9 @@ public partial class DenizadarAlperProjectContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=sql.bsite.net\\MSSQL2016 ;Initial Catalog=denizadar_alperProject;Persist Security Info=False;User ID=denizadar_alperProject;Password=8520Alper!?1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+        => 
+            //optionsBuilder.UseSqlServer("Server=sql.bsite.net\\MSSQL2016 ;Initial Catalog=denizadar_alperProject;Persist Security Info=False;User ID=denizadar_alperProject;Password=8520Alper!?1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=MSI;Database=TestArchitecture;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
