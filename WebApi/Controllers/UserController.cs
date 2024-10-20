@@ -1,9 +1,16 @@
 ﻿using Application.Queries.UserQrys;
-using Common.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Common.Utils;
 using WebApi.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using WebApi.Filters;
+using Common.DTO.User;
+using Application.Commands.UserCmds;
+using WebApi.Validators.Employees;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Domain.Models;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 
 namespace WebApi.Controllers
@@ -28,13 +35,16 @@ namespace WebApi.Controllers
             return ApiResult<LoginDto>.GetHttpResult(result); 
 
         }
+
         [HttpPost("/createUser")]
-        [Produces(typeof(AlperResult<LoginDto>))]
-        public async Task<IResult> CreateUser([FromBody] LoginQry qry, CancellationToken cancellationToken)
+        [Produces(typeof(AlperResult<TblEmployee>))]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ServiceFilter(typeof(AlperCmdFilter<CreateUserCmd, CreateUserVld>))]
+        public async Task<IResult> CreateUser([FromBody] CreateUserCmd qry, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(qry, cancellationToken);
 
-            return ApiResult<LoginDto>.GetHttpResult(result);
+            return ApiResult<TblEmployee>.GetHttpResult(result);
 
         }
 

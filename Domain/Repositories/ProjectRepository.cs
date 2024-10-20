@@ -6,9 +6,9 @@ namespace Domain.Repositories;
 
 public sealed class ProjectRepository<T> : IProjectRepository<T> where T: class
 {
-    private readonly DenizadarAlperProjectContext _dbContext;
+    private readonly AlperProjectContext _dbContext;
 
-    public ProjectRepository(DenizadarAlperProjectContext dbContext)
+    public ProjectRepository(AlperProjectContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -64,5 +64,6 @@ public sealed class ProjectRepository<T> : IProjectRepository<T> where T: class
     {
         return await _dbContext.Set<T>().ToListAsync();
     }
+
 }
 

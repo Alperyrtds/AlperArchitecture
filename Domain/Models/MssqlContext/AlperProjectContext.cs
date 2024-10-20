@@ -1,25 +1,51 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Models.MssqlContext;
 
-public partial class DenizadarAlperProjectContext : DbContext
+public partial class AlperProjectContext : DbContext, IUnitOfWork
 {
-    public DenizadarAlperProjectContext()
+    public AlperProjectContext()
     {
     }
 
-    public DenizadarAlperProjectContext(DbContextOptions<DenizadarAlperProjectContext> options)
+    public AlperProjectContext(DbContextOptions<AlperProjectContext> options)
         : base(options)
     {
     }
 
     public virtual DbSet<TblEmployee> TblEmployees { get; set; }
 
+    public async Task Commit(CancellationToken cancellationToken)
+    {
+        await SaveChangesAsync(cancellationToken);
+    }
+
+    // Rollback metodu, işlemi geri almak için ChangeTracker'ı sıfırlar.
+    public Task Rollback(CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Modified:
+                    entry.State = EntityState.Unchanged;
+                    break;
+                case EntityState.Added:
+                    entry.State = EntityState.Detached;
+                    break;
+                case EntityState.Deleted:
+                    entry.State = EntityState.Unchanged;
+                    break;
+            }
+        }
+        return Task.CompletedTask;
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => 
-            //optionsBuilder.UseSqlServer("Server=sql.bsite.net\\MSSQL2016 ;Initial Catalog=denizadar_alperProject;Persist Security Info=False;User ID=denizadar_alperProject;Password=8520Alper!?1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
-            optionsBuilder.UseSqlServer("Server=MSI;Database=TestArchitecture;Trusted_Connection=True;TrustServerCertificate=True;");
+        =>
+            optionsBuilder.UseSqlServer("Server=DESKTOP-UMKSOMS\\MSSQLSERVER01;Database=AlperArchitecture;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,3 +71,4 @@ public partial class DenizadarAlperProjectContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
+

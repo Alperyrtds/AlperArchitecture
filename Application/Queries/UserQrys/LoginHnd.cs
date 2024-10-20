@@ -1,5 +1,4 @@
-﻿using Common.DTO;
-using Common.Utils;
+﻿using Common.Utils;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +8,7 @@ using System.Text;
 using Domain.Abstractions;
 using Domain.Exceptions;
 using Domain.Models;
+using Common.DTO.User;
 
 namespace Application.Queries.UserQrys;
 
@@ -48,6 +48,7 @@ public sealed class LoginHnd : IRequestHandler<LoginQry, AlperResult<LoginDto>>
                 new(ClaimTypes.GivenName, user.Name),
                 new(ClaimTypes.Surname, user.Surname),
                 new(ClaimTypes.MobilePhone, user.PhoneNumber),
+                new(ClaimTypes.Role, user.TransactionUser),
             };
 
             var token = new JwtSecurityToken

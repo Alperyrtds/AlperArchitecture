@@ -19,4 +19,5 @@ public partial class TblEmployee
     public DateTime? StartJobDate { get; set; }
 
     public string? TransactionUser { get; set; }
+    public int Status { get; set; }
 }

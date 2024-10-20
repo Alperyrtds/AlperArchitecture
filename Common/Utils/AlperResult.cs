@@ -41,9 +41,10 @@ public sealed class AlperResult<TValue>()
     {
         IsError = true;
         Result = default!;
-        ResultCode = ResultCodes.BadRequest;
+        ResultCode = error.Contains("Sistem") ? ResultCodes.BadRequest : ResultCodes.NoContent;
         Errors = [Status.Olustur(ResultCode, error)];
     }
+    
     private AlperResult(Status status) : this()
     {
         IsError = true;
@@ -74,7 +75,7 @@ public sealed class AlperResult<TValue>()
 
     public override string ToString()
     {
-        var builder = new StringBuilder("SuBilgiResult { IsError = " + IsError + ", Result = " + Result +
+        var builder = new StringBuilder("AlperResult { IsError = " + IsError + ", Result = " + Result +
                                         ", ResultCode = " + ResultCode + ", Errors = [");
         foreach (var error in Errors)
         {
@@ -103,29 +104,40 @@ public sealed class AlperResult<TValue>()
 
         var errorDetails = new List<ErrorDetail>();
 
-
         foreach (var trc in stackStr.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
         {
-            if (trc.Contains("Alper") && !trc.Contains("AlperResult") &&
-                (!trc.Contains('<') || !trc.Contains('>')))
+            try
             {
                 var satir = trc.Replace("at ", "");
 
-                var method = satir[..satir.IndexOf('(', StringComparison.Ordinal)];
+                var methodStartIndex = satir.IndexOf('(');
+                var fileIndex = satir.LastIndexOf(" in ", StringComparison.Ordinal);
+                var lineIndex = satir.LastIndexOf(":line ", StringComparison.Ordinal);
+
+                // Eğer parantez veya " in " bulunamazsa bir sonraki satıra geç
+                if (methodStartIndex == -1 || fileIndex == -1 || lineIndex == -1)
+                    continue;
+
+                var method = satir[..methodStartIndex];
                 method = method[(method.LastIndexOf('.') + 1)..];
 
-                var file = satir[(satir.LastIndexOf(" in ", StringComparison.Ordinal) + 4)..];
-                var line = file[(file.LastIndexOf(":line ", StringComparison.Ordinal) + 6)..];
-                file = file[..file.LastIndexOf(":line ", StringComparison.Ordinal)];
-                var className = file[(file.LastIndexOf('/') + 1)..].Replace(".cs", "");
-                var errorDetail = ErrorDetail.Olustur(className, method, line);
+                var file = satir[(fileIndex + 4)..lineIndex];
+                var line = satir[(lineIndex + 6)..];
+
+                file = file[(file.LastIndexOf('/') + 1)..].Replace(".cs", "");
+
+                var errorDetail = ErrorDetail.Olustur(file, method, line);
                 errorDetails.Add(errorDetail);
+            }
+            catch (Exception ex)
+            {
+                continue; 
             }
         }
 
-
         return Status.Olustur(ResultCodes.InternalServerError, error, errorDetails);
     }
+
     public static AlperResult<TValue> Validation(string error)
     {
         return Status.Olustur(ResultCodes.Forbidden, error);

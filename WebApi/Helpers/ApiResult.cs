@@ -20,7 +20,7 @@ public static class ApiResult<T>
     {
         foreach (var error in response.Errors)
         {
-            error.Message = "Sistem hatası. Lütfen hata numarasını sistem yöneticisine bildiriniz.";
+            error.Message = $"Sistem hatası.=> {error.Message}";
         }
 
         return response;

@@ -1,4 +1,5 @@
-﻿using System.Net.Security;
+﻿using NUlid;
+using System.Net.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -7,6 +8,12 @@ namespace Common.Utils;
 
 public sealed class Genarate
 {
+    public static string IdGenerator()
+    {
+        var myUlid = Ulid.NewUlid().ToString();
+
+        return myUlid;
+    }
     public static string PasswordHash(string password, string key)
     {
         if (string.IsNullOrWhiteSpace(key))

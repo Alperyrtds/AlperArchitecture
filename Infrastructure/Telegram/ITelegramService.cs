@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.DTO;
-
-public sealed class CreateUserDto
+namespace Alper.Infrastructure.Telegram
 {
+    internal class ITelegramService
+    {
+    }
 }

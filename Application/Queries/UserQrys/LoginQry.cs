@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Text;
-using Common.DTO;
 using Common.Utils;
+using Common.DTO.User;
 
 namespace Application.Queries.UserQrys;
 

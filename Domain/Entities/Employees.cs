@@ -2,9 +2,9 @@
 
 namespace Domain.Entities;
 
-    public sealed class Employees : Entity
+    public sealed class User : Entity
     {
-        public Employees(Guid id, string name, string surname, DateTime birthDate, string identityNumber, string phoneNumber) : base(id)
+        public User(Guid id, string name, string surname, DateTime birthDate, string identityNumber, string phoneNumber) : base(id)
         {
             Name = name;
             Surname = surname;
@@ -13,7 +13,7 @@ namespace Domain.Entities;
             PhoneNumber = phoneNumber;
         }
 
-        private Employees()
+        private User()
         {
 
         }

@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Text;
 
-namespace Common.DTO;
+namespace Common.DTO.User;
 
 public sealed record LoginDto(string Token, IEnumerable<Claim> Claims)
 {

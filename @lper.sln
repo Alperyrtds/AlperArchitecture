@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{7255D001-1F06-48A0-B50B-24302BE54ED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alper.Application", "Application\Alper.Application.csproj", "{7255D001-1F06-48A0-B50B-24302BE54ED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{55E3BBC0-50FA-4803-BF19-47C5D55CC7CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alper.Domain", "Domain\Alper.Domain.csproj", "{55E3BBC0-50FA-4803-BF19-47C5D55CC7CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{41497452-28FF-4B55-9B3F-82CBAD03A000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alper.Infrastructure", "Infrastructure\Alper.Infrastructure.csproj", "{41497452-28FF-4B55-9B3F-82CBAD03A000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{19542662-1EAA-4FEA-BE1A-E6FF19A6E814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alper.WebApi", "WebApi\Alper.WebApi.csproj", "{19542662-1EAA-4FEA-BE1A-E6FF19A6E814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{59610639-9783-4D61-BAF8-0F4F5D108B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alper.Common", "Common\Alper.Common.csproj", "{59610639-9783-4D61-BAF8-0F4F5D108B18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
