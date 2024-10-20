@@ -1,4 +1,6 @@
-﻿using Application.Queries.UserQrys;
+﻿using Alper.Application.Queries.UserQrys;
+using Alper.Repository.Models;
+using Application.Queries.UserQrys;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Common.Utils;
@@ -9,8 +11,6 @@ using Common.DTO.User;
 using Application.Commands.UserCmds;
 using WebApi.Validators.Employees;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Domain.Models;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 
 namespace WebApi.Controllers
@@ -37,16 +37,25 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/createUser")]
-        [Produces(typeof(AlperResult<TblEmployee>))]
+        [Produces(typeof(AlperResult<TblUser>))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(AlperCmdFilter<CreateUserCmd, CreateUserVld>))]
         public async Task<IResult> CreateUser([FromBody] CreateUserCmd qry, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(qry, cancellationToken);
 
-            return ApiResult<TblEmployee>.GetHttpResult(result);
+            return ApiResult<TblUser>.GetHttpResult(result);
 
         }
+        [HttpPost("/getUserByEmail")]
+        [Produces(typeof(AlperResult<TblUser>))]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IResult> GetUserByEmail([FromBody] GetUserByEmailQry qry , CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(qry, cancellationToken);
 
+            return ApiResult<TblUser>.GetHttpResult(result);
+
+        }
     }
 }

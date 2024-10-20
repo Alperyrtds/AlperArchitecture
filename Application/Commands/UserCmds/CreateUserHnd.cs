@@ -1,23 +1,21 @@
-﻿using Application.Abstractions.Messaging;
-using Common.DTO.User;
+﻿using Alper.Domain.Exceptions;
+using Alper.Repository.Abstractions;
+using Alper.Repository.Models;
 using Common.Enums;
 using Common.Utils;
-using Domain.Abstractions;
-using Domain.Exceptions;
-using Domain.Models;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 
 namespace Application.Commands.UserCmds;
 
-public sealed class CreateUserHnd(IProjectRepository<TblEmployee> projectRepository, IUnitOfWork unitOfWork, IConfiguration configuration) : IRequestHandler<CreateUserCmd, AlperResult<TblEmployee>>
+public sealed class CreateUserHnd(IProjectRepository<TblUser> projectRepository, IUnitOfWork unitOfWork, IConfiguration configuration) : IRequestHandler<CreateUserCmd, AlperResult<TblUser>>
 {
-    public async Task<AlperResult<TblEmployee>> Handle(CreateUserCmd request, CancellationToken cancellationToken)
+    public async Task<AlperResult<TblUser>> Handle(CreateUserCmd request, CancellationToken cancellationToken)
     {
         try
         {
             var key = configuration["Jwt:Key"];
-            var user = new TblEmployee
+            var user = new TblUser
             {
                 Id = Genarate.IdGenerator(),
                 Email = request.NewUserCmdDto.Email,
@@ -31,10 +29,10 @@ public sealed class CreateUserHnd(IProjectRepository<TblEmployee> projectReposit
                 Status = UserStatus.DogrulamaBekliyor.GetHashCode(),
             };
 
-            await projectRepository.InsertAsync(user);
+            await projectRepository.InsertAsync(user, cancellationToken);
             await unitOfWork.SaveChangesAsync();
 
-            return new AlperResult<TblEmployee>(user);
+            return new AlperResult<TblUser>(user);
         }
         catch (AlperAppException ex)
         {
@@ -44,7 +42,7 @@ public sealed class CreateUserHnd(IProjectRepository<TblEmployee> projectReposit
         catch (Exception ex)
         {
             await unitOfWork.Rollback(cancellationToken);
-            return AlperResult<TblEmployee>.Exception(ex.Message);
+            return AlperResult<TblUser>.Exception(ex.Message);
         }
        
     }

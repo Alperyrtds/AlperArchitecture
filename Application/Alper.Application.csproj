@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Alper.Common.csproj" />
     <ProjectReference Include="..\Domain\Alper.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Alper.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

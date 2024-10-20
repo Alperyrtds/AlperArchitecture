@@ -1,6 +1,6 @@
 ﻿using Common.Utils;
 
-namespace Domain.Exceptions;
+namespace Alper.Domain.Exceptions;
 
 public sealed class AlperAppException : Exception
 {

@@ -1,7 +1,8 @@
-﻿using Domain.Abstractions;
+﻿using Alper.Repository.Abstractions;
+using Alper.Repository.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Models.MssqlContext;
+namespace Alper.Infrastructure.Models.MssqlContext;
 
 public partial class AlperProjectContext : DbContext, IUnitOfWork
 {
@@ -14,7 +15,7 @@ public partial class AlperProjectContext : DbContext, IUnitOfWork
     {
     }
 
-    public virtual DbSet<TblEmployee> TblEmployees { get; set; }
+    public virtual DbSet<TblUser> TblEmployees { get; set; }
 
     public async Task Commit(CancellationToken cancellationToken)
     {
@@ -49,11 +50,11 @@ public partial class AlperProjectContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TblEmployee>(entity =>
+        modelBuilder.Entity<TblUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Employees");
+            entity.HasKey(e => e.Id).HasName("PK_tbl_User");
 
-            entity.ToTable("tbl_Employees");
+            entity.ToTable("tbl_User");
 
             entity.Property(e => e.Id).HasMaxLength(30);
             entity.Property(e => e.BirthDate).HasColumnType("datetime");

@@ -1,6 +1,8 @@
-﻿namespace Domain.Models;
+﻿using Alper.Domain.Entities;
 
-public partial class TblEmployee
+namespace Alper.Repository.Models;
+
+public partial class TblUser : IEntity
 {
     public string Id { get; set; } = null!;
 

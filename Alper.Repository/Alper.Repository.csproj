@@ -7,18 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="4.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Polly.Core" Version="8.4.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Alper.Repository\Alper.Repository.csproj" />
-    <ProjectReference Include="..\Common\Alper.Common.csproj" />
     <ProjectReference Include="..\Domain\Alper.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Sms\" />
   </ItemGroup>
 
 </Project>

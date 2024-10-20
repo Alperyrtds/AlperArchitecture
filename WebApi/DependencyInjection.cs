@@ -1,8 +1,4 @@
 ﻿using Application.Commands.UserCmds;
-using Domain.Abstractions;
-using Domain.Models;
-using Domain.Repositories;
-using FluentValidation;
 using WebApi.Filters;
 using WebApi.Validators.Employees;
 

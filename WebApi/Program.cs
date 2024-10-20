@@ -1,8 +1,6 @@
 using Alper.WebApi;
 using Application;
-using Application.Commands.UserCmds;
 using Domain;
-using Domain.Models.MssqlContext;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +8,27 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
-using WebApi.Filters;
-using WebApi.Validators.Employees;
+using Alper.Application;
+using Alper.Infrastructure.Models.MssqlContext;
+using Alper.Repository;
+using Serilog.Events;
+
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
+
+Log.Information("Web host baþlatýlýyor....");
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 // Add services to the container.
 
@@ -65,7 +80,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services
     .AddApplication(builder.Configuration)
     .AddInfrastructure()
-    .AddRepository().AddWebApi(builder.Configuration);
+    .AddDomain().
+    AddRepository(builder.Configuration).
+    AddWebApi(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 

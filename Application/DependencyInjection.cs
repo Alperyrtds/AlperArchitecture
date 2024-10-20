@@ -1,11 +1,14 @@
-﻿using Domain.Abstractions;
-using Domain.Models;
-using Domain.Repositories;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
+using Alper.Application.Behaviors;
+using Alper.Infrastructure.Models;
+using Alper.Repository.Abstractions;
+using Alper.Repository.Models;
+using Alper.Repository.Repositories;
+using MediatR;
 
-namespace Application;
+namespace Alper.Application;
 
 public static class DependencyInjection
 {
@@ -18,7 +21,9 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(assembly);
 
-        services.AddScoped<IProjectRepository<TblEmployee>, ProjectRepository<TblEmployee>>();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+        services.AddScoped<IProjectRepository<TblUser>, ProjectRepository<TblUser>>();
 
         return services;
     }
