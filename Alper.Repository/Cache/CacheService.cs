@@ -185,11 +185,11 @@ namespace Alper.Repository.Cache
                 {
                     //FileName = "/opt/homebrew/bin/redis-cli",
                     //Arguments = "-h 192.168.30.19 -p 6379 flushdb"
-                    FileName = "/usr/bin/redis-cli",
+                    FileName = @"C:\Users\Alper\source\repos\Redis\redis-cli",
                     Arguments = "flushdb"
                 };
 
-                var process = new Process { StartInfo = startInfo };
+                using var process = new Process { StartInfo = startInfo };
 
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
@@ -198,16 +198,21 @@ namespace Alper.Repository.Cache
 
                 process.OutputDataReceived += (_, args) =>
                 {
-                    data = args.Data;
-                    Log(data);
+                    if (args.Data != null) 
+                    {
+                        data = args.Data;
+                        Log(data);
+                    }
                 };
 
                 process.Start();
                 process.BeginOutputReadLine();
 
-                return data == "OK"
+                process.WaitForExit();
+
+                return process.ExitCode == 0 && data == "OK"
                     ? new MessageDto("Cache temizlendi")
-                    : "Cache temizlenemedi";
+                    : new MessageDto("Cache temizlenemedi");
             }
             catch (Exception e)
             {
