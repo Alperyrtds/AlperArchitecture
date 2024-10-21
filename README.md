@@ -141,5 +141,5 @@ Katkıda bulunmak isterseniz, bir "fork" yapın ve ardından pull request gönde
 # Lisans
 Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına göz atın.
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/Alperyrtds/-lper/tree/master?tab=MIT-1-ov-file)
 
