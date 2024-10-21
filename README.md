@@ -113,6 +113,11 @@ POST /api/auth/login
   "eposta": "alper.yurtdas06@gmail.com"
 }
 ```
+## Get api/Sistem/cleanRedisKeys
+```json
+- Rediste biriken Keyleri silmek için kullanılır
+
+```
 
 # MediatR Kullanımı
 
