@@ -94,7 +94,7 @@ Body:
 }
 ```
 
-- Kullanıcı create (POST):
+- Kullancı Giriş Yapma (POST):
 
 POST /api/auth/login
 ```json
