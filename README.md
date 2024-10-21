@@ -66,12 +66,28 @@ dotnet restore
   "DefaultConnection": "Server=YOUR_SERVER;Database=YOUR_DATABASE;Trusted_Connection=True;TrustServerCertificate=True;"
 }
 ```
+4. Veritabanına örnek kullanıcı ekle:
+```sql
+CREATE TABLE Tbl_Users (
+    Id NVARCHAR(50) NOT NULL PRIMARY KEY,
+    Email NVARCHAR(255),
+    Password NVARCHAR(255),
+    Name NVARCHAR(100),
+    Surname NVARCHAR(100),
+    PhoneNumber NVARCHAR(20),
+    BirthDate DATE,
+    StartJobDate DATE,
+    TransactionUser NVARCHAR(100)
+);
 
-4. Veritabanı migrasyonlarını uygulayın:
+INSERT INTO Tbl_Users (Id, Email, Password, Name, Surname, PhoneNumber, BirthDate, StartJobDate, TransactionUser)
+VALUES ('1', 'john.doe@example.com', 'password123', 'John', 'Doe', '1234567890', '1985-07-24', '2020-01-01', 'admin');
+```
+5. Veritabanı migrasyonlarını uygulayın:
 ```bash
 dotnet ef database update
 ```
-5. Uygulamayı çalıştırın:
+6. Uygulamayı çalıştırın:
 ```bash
 dotnet run
 ```
@@ -94,7 +110,7 @@ Body:
 }
 ```
 
-- Kullancı Giriş Yapma (POST):
+- Kullanıcı create (POST):
 
 POST /api/auth/login
 ```json
@@ -147,6 +163,7 @@ Katkıda bulunmak isterseniz, bir "fork" yapın ve ardından pull request gönde
 Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına göz atın.
 
 [MIT](https://github.com/Alperyrtds/-lper/tree/master?tab=MIT-1-ov-file)
+
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -221,11 +238,29 @@ dotnet restore
 }
 ```
 
-4. Apply database migrations:
+4. Add a sample user to the database:
+```sql
+CREATE TABLE Tbl_Users (
+    Id NVARCHAR(50) NOT NULL PRIMARY KEY,
+    Email NVARCHAR(255),
+    Password NVARCHAR(255),
+    Name NVARCHAR(100),
+    Surname NVARCHAR(100),
+    PhoneNumber NVARCHAR(20),
+    BirthDate DATE,
+    StartJobDate DATE,
+    TransactionUser NVARCHAR(100)
+);
+
+INSERT INTO Tbl_Users (Id, Email, Password, Name, Surname, PhoneNumber, BirthDate, StartJobDate, TransactionUser)
+VALUES ('1', 'john.doe@example.com', 'password123', 'John', 'Doe', '1234567890', '1985-07-24', '2020-01-01', 'admin');
+```
+
+5. Apply database migrations:
 ```bash
 dotnet ef database update
 ```
-5. Run the application:
+6. Run the application:
 ```bash
 dotnet run
 ```
