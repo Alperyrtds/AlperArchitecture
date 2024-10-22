@@ -14,7 +14,7 @@ using Common.DTO.User;
 
 namespace Alper.Application.Queries.UserQrys;
 
-public sealed class LoginHnd(IConfiguration configuration, IProjectRepository<TblUser> employeeRepository)
+public sealed class LoginHnd(IConfiguration configuration, IProjectRepository<TblUsers> employeeRepository)
     : IRequestHandler<LoginQry, AlperResult<LoginDto>>
 {
     public async Task<AlperResult<LoginDto>> Handle(LoginQry request, CancellationToken cancellationToken)

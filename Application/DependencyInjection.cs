@@ -23,7 +23,7 @@ public static class DependencyInjection
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
-        services.AddScoped<IProjectRepository<TblUser>, ProjectRepository<TblUser>>();
+        services.AddScoped<IProjectRepository<TblUsers>, ProjectRepository<TblUsers>>();
 
         return services;
     }

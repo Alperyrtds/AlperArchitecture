@@ -1,4 +1,5 @@
-﻿using Alper.Domain.Exceptions;
+﻿using Alper.Application.Commands.UserCmds;
+using Alper.Domain.Exceptions;
 using Alper.Repository.Abstractions;
 using Alper.Repository.Models;
 using Common.Enums;
@@ -8,14 +9,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Application.Commands.UserCmds;
 
-public sealed class CreateUserHnd(IProjectRepository<TblUser> projectRepository, IUnitOfWork unitOfWork, IConfiguration configuration) : IRequestHandler<CreateUserCmd, AlperResult<TblUser>>
+public sealed class CreateUserHnd(IProjectRepository<TblUsers> projectRepository, IUnitOfWork unitOfWork, IConfiguration configuration) : IRequestHandler<CreateUserCmd, AlperResult<TblUsers>>
 {
-    public async Task<AlperResult<TblUser>> Handle(CreateUserCmd request, CancellationToken cancellationToken)
+    public async Task<AlperResult<TblUsers>> Handle(CreateUserCmd request, CancellationToken cancellationToken)
     {
         try
         {
             var key = configuration["Jwt:Key"];
-            var user = new TblUser
+            var user = new TblUsers
             {
                 Id = Genarate.IdGenerator(),
                 Email = request.NewUserCmdDto.Email,
@@ -32,7 +33,7 @@ public sealed class CreateUserHnd(IProjectRepository<TblUser> projectRepository,
             await projectRepository.InsertAsync(user, cancellationToken);
             await unitOfWork.SaveChangesAsync();
 
-            return new AlperResult<TblUser>(user);
+            return new AlperResult<TblUsers>(user);
         }
         catch (AlperAppException ex)
         {
@@ -42,7 +43,7 @@ public sealed class CreateUserHnd(IProjectRepository<TblUser> projectRepository,
         catch (Exception ex)
         {
             await unitOfWork.Rollback(cancellationToken);
-            return AlperResult<TblUser>.Exception(ex.Message);
+            return AlperResult<TblUsers>.Exception(ex.Message);
         }
        
     }

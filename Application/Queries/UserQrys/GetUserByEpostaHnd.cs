@@ -14,16 +14,16 @@ using Common.Utils;
 
 namespace Alper.Application.Queries.UserQrys;
 
-public sealed class GetUserByEmailHnd(IProjectRepository<TblUser> projectRepository) : IRequestHandler<GetUserByEmailQry, AlperResult<TblUser>>
+public sealed class GetUserByEmailHnd(IProjectRepository<TblUsers> projectRepository) : IRequestHandler<GetUserByEmailQry, AlperResult<TblUsers>>
 {
-    public async Task<AlperResult<TblUser>> Handle(GetUserByEmailQry request, CancellationToken cancellationToken)
+    public async Task<AlperResult<TblUsers>> Handle(GetUserByEmailQry request, CancellationToken cancellationToken)
     {
         try
         {
             var kullanici =
                 await projectRepository.GetByEmailAsync(request.Eposta, cancellationToken);
 
-            return kullanici == null ? AlperResult<TblUser>.NotFound(UserErrors.KullaniciBulunamadi) : kullanici;
+            return kullanici == null ? AlperResult<TblUsers>.NotFound(UserErrors.KullaniciBulunamadi) : kullanici;
         }
         catch (AlperAppException ex)
         {
@@ -31,7 +31,7 @@ public sealed class GetUserByEmailHnd(IProjectRepository<TblUser> projectReposit
         }
         catch (Exception e)
         {
-            return AlperResult<TblUser>.Exception(e.Message);
+            return AlperResult<TblUsers>.Exception(e.Message);
         }
     }
 }

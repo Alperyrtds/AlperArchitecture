@@ -73,7 +73,7 @@ public sealed class ProjectRepository<T>(AlperProjectContext dbContext, ICacheSe
         var className = typeof(T).Name;
         var tableName = Char.ToLowerInvariant(className[0]) + className.Substring(1);
         tableName = tableName.Insert(3, "_");
-        tableName = tableName + "s";
+        //tableName = tableName + "s";
 
         var sql = $"SELECT * FROM [{tableName}] WHERE [Email] = '{email}'";
 

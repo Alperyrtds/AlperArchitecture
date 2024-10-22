@@ -2,7 +2,7 @@
 
 namespace Alper.Repository.Models;
 
-public partial class TblUser : IEntity
+public partial class TblUsers : IEntity
 {
     public string Id { get; set; } = null!;
 

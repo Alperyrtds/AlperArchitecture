@@ -1,4 +1,5 @@
-﻿using Application.Commands.UserCmds;
+﻿using Alper.Application.Commands.UserCmds;
+using Application.Commands.UserCmds;
 using Common.Utils;
 using FluentValidation;
 

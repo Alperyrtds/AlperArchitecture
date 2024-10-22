@@ -1,4 +1,5 @@
-﻿using Alper.Application.Queries.UserQrys;
+﻿using Alper.Application.Commands.UserCmds;
+using Alper.Application.Queries.UserQrys;
 using Alper.Repository.Models;
 using Application.Queries.UserQrys;
 using MediatR;
@@ -37,25 +38,37 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/createUser")]
-        [Produces(typeof(AlperResult<TblUser>))]
+        [Produces(typeof(AlperResult<TblUsers>))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ServiceFilter(typeof(AlperCmdFilter<CreateUserCmd, CreateUserVld>))]
         public async Task<IResult> CreateUser([FromBody] CreateUserCmd qry, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(qry, cancellationToken);
 
-            return ApiResult<TblUser>.GetHttpResult(result);
+            return ApiResult<TblUsers>.GetHttpResult(result);
 
         }
         [HttpPost("/getUserByEmail")]
-        [Produces(typeof(AlperResult<TblUser>))]
+        [Produces(typeof(AlperResult<TblUsers>))]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IResult> GetUserByEmail([FromBody] GetUserByEmailQry qry , CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(qry, cancellationToken);
 
-            return ApiResult<TblUser>.GetHttpResult(result);
+            return ApiResult<TblUsers>.GetHttpResult(result);
 
         }
+
+        [HttpGet("/getAllUser")]
+        [Produces(typeof(AlperResult<TblUsers>))]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IResult> GetAllUser(CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetAllUserQry(), cancellationToken);
+
+            return ApiResult<IEnumerable<TblUsers>>.GetHttpResult(result);
+
+        }
+
     }
 }

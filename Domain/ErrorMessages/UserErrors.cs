@@ -23,6 +23,7 @@ public static class UserErrors
     public const string IslemYapanKullaniciDagitimSirketindeDegil = "İşlem yapan kullanıcı dağıtım şirketi kullanıcısı değil.";
 
     public const string KullaniciBulunamadi = "Kullanıcı bulunamadı.";
+    public const string KullaniciListesiBulunamadi = "Kullanıcı listesi bulunamadı.";
     public const string KullaniciDurumuUygunDegil = "Kullanıcı durumu uygun değil.";
     public const string KullaniciKvkkOnayiZatenVar = "Kullanıcı kvkk onayı daha önce verilmiş.";
 }

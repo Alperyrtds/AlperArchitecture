@@ -15,7 +15,7 @@ public partial class AlperProjectContext : DbContext, IUnitOfWork
     {
     }
 
-    public virtual DbSet<TblUser> TblEmployees { get; set; }
+    public virtual DbSet<TblUsers> TblUsers { get; set; }
 
     public async Task Commit(CancellationToken cancellationToken)
     {
@@ -50,11 +50,11 @@ public partial class AlperProjectContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TblUser>(entity =>
+        modelBuilder.Entity<TblUsers>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_tbl_User");
+            entity.HasKey(e => e.Id).HasName("PK_tbl_Users");
 
-            entity.ToTable("tbl_User");
+            entity.ToTable("tbl_Users");
 
             entity.Property(e => e.Id).HasMaxLength(30);
             entity.Property(e => e.BirthDate).HasColumnType("datetime");

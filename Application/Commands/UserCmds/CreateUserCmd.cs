@@ -1,10 +1,10 @@
-﻿using Alper.Infrastructure.Models;
-using Alper.Repository.Models;
+﻿using Alper.Repository.Models;
+using Application.Commands;
 using Common.DTO.User;
 using Common.Utils;
 using MediatR;
 
-namespace Application.Commands.UserCmds;
+namespace Alper.Application.Commands.UserCmds;
 
-public sealed record CreateUserCmd(NewUserCmdDto NewUserCmdDto) : AlperCmd, IRequest<AlperResult<TblUser>>;
+public sealed record CreateUserCmd(NewUserCmdDto NewUserCmdDto) : AlperCmd, IRequest<AlperResult<TblUsers>>;
 
