@@ -18,6 +18,7 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .WriteTo.Console()
+    .WriteTo.File("log-.txt")
     .CreateBootstrapLogger();
 
 Log.Information("Web host baþlatýlýyor....");
@@ -31,6 +32,7 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .Enrich.FromLogContext());
 
 // Add services to the container.
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -92,7 +94,7 @@ builder.Host.UseSerilog((context, configuration) =>
 
 builder.Services.AddDbContext<AlperProjectContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AlperProject"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AlperProjectBackup"));
 });
 
 
@@ -104,6 +106,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+}
+app.UseStaticFiles();
+
 
 app.UseSerilogRequestLogging();
 

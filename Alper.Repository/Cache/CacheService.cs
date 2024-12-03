@@ -181,6 +181,7 @@ namespace Alper.Repository.Cache
         {
             try
             {
+                _logger.LogInformation($"Starting Redis Keys Delete Service.");
                 var startInfo = new ProcessStartInfo
                 {
                     //FileName = "/opt/homebrew/bin/redis-cli",

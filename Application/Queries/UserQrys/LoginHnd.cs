@@ -11,15 +11,18 @@ using Alper.Repository.Abstractions;
 using Alper.Repository.Models;
 using Application.Queries.UserQrys;
 using Common.DTO.User;
+using Microsoft.Extensions.Logging;
 
 namespace Alper.Application.Queries.UserQrys;
 
-public sealed class LoginHnd(IConfiguration configuration, IProjectRepository<TblUsers> employeeRepository)
+public sealed class LoginHnd(IConfiguration configuration, IProjectRepository<TblUsers> employeeRepository, ILogger<LoginHnd> logger)
     : IRequestHandler<LoginQry, AlperResult<LoginDto>>
 {
     public async Task<AlperResult<LoginDto>> Handle(LoginQry request, CancellationToken cancellationToken)
     {
         var result = new AlperResult<LoginDto>();
+
+        logger.LogInformation($"Login Started");
         try
         {
             var key = configuration["Jwt:Key"];
@@ -61,16 +64,20 @@ public sealed class LoginHnd(IConfiguration configuration, IProjectRepository<Tb
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
+            logger.LogInformation($"Login Successfully Finished and loggined user is Id=> {user.Id}");
 
             return new LoginDto(tokenString, claims.ToArray());
         }
         catch (AlperAppException ex)
         {
+            logger.LogError($"Login Error => {ex.Message}");
             return ex.Message;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            return AlperResult<LoginDto>.Exception(e.Message);
+            logger.LogError($"Login Error => {ex.Message}");
+
+            return AlperResult<LoginDto>.Exception(ex.Message);
         }
     }
 }
